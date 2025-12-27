@@ -6,7 +6,7 @@ export default function Home() {
 		<Container>
 			<div className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-6">
 				<h1 className="text-3xl font-semibold tracking-tight text-(--color-text-primary)">
-					Your store, any theme.
+					Sua loja, seu tema. NBeloti
 				</h1>
 				<p className="mt-2 max-w-2xl text-(--color-text-secondary)">
 					A professional, generic e-commerce foundation. Swap branding,
@@ -18,7 +18,7 @@ export default function Home() {
 						href="/products"
 						className="inline-flex rounded-lg bg-(--color-accent) px-4 py-2 text-sm font-medium text-white hover:opacity-95"
 					>
-						Browse products
+						Procurar produtos
 					</Link>
 					<Link
 						href="/account"
