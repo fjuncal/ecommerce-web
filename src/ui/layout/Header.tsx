@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Container from "@/ui/layout/Container";
-import SearchInput from "@/ui/components/SearchInput";
 
 export default function Header() {
 	return (
@@ -12,23 +11,23 @@ export default function Header() {
 						href="/"
 						className="shrink-0 text-lg font-semibold tracking-tight text-(--color-text-primary)"
 					>
-						Store
+						Loja
 					</Link>
 
 					{/* Actions */}
 					<div className="flex shrink-0 items-center gap-2">
 						<Link
-							href="/products"
+							href="/produtos"
 							className="hidden rounded-lg px-3 py-2 text-sm text-(--color-text-primary) hover:bg-(--color-surface) sm:inline-flex"
 						>
-							Products
+							Produtos
 						</Link>
 
 						<Link
-							href="/cart"
+							href="/carrinho"
 							className="inline-flex items-center rounded-lg border border-(--color-border) px-3 py-2 text-sm text-(--color-text-primary) hover:bg-(--color-surface)"
 						>
-							Cart
+							Carrinho
 							<span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-(--color-accent) px-1.5 text-xs font-semibold text-white">
 								0
 							</span>
