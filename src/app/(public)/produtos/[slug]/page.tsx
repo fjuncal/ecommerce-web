@@ -1,7 +1,6 @@
 import Container from "@/ui/layout/Container";
 import { buscarProdutoPorSlug } from "@/core/utils/produtos";
-import { formatarBRLDeCentavos } from "@/core/utils/dinheiroFormatter";
-import ChipOpcao from "@/ui/components/ChipOpcao";
+import PainelCompraProduto from "@/modules/catalogo/PainelCompraProduto";
 import Link from "next/link";
 
 type PageProps = {
@@ -9,10 +8,6 @@ type PageProps = {
 		slug: string;
 	}>;
 };
-
-function menorPrecoCentavos(precos: number[]) {
-	return Math.min(...precos);
-}
 
 export default async function ProdutoDetalhePage({ params }: PageProps) {
 	const { slug } = await params;
@@ -41,16 +36,13 @@ export default async function ProdutoDetalhePage({ params }: PageProps) {
 		);
 	}
 
-	const precoAPartir = formatarBRLDeCentavos(
-		menorPrecoCentavos(produto.variantes.map((v) => v.precoCentavos))
-	);
-
 	const imagemPrincipal = produto.imagens[0];
 	const miniaturas = produto.imagens.slice(0, 4);
 
 	return (
 		<Container>
 			<div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+				{/* Imagens */}
 				<div className="flex flex-col gap-3">
 					<div className="overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface)">
 						{/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,6 +72,7 @@ export default async function ProdutoDetalhePage({ params }: PageProps) {
 					) : null}
 				</div>
 
+				{/* Conteúdo */}
 				<div className="flex flex-col gap-4">
 					<div>
 						<h1 className="text-3xl font-semibold tracking-tight text-(--color-text-primary)">
@@ -90,59 +83,24 @@ export default async function ProdutoDetalhePage({ params }: PageProps) {
 						</p>
 					</div>
 
-					<div className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-4">
-						<div className="flex items-end justify-between gap-3">
-							<div>
-								<p className="text-xs uppercase tracking-wide text-(--color-text-secondary)">
-									A partir de
-								</p>
-								<p className="mt-1 text-2xl font-semibold text-(--color-text-primary)">
-									{precoAPartir}
-								</p>
-							</div>
+					<PainelCompraProduto produto={produto} />
 
-							<span className="rounded-full border border-(--color-border) bg-(--color-background) px-3 py-1 text-xs text-(--color-text-secondary)">
-								{produto.variantes.length} variante(s)
-							</span>
-						</div>
+					<div className="rounded-2xl border border-(--color-border) bg-(--color-background) p-4">
+						<h2 className="text-sm font-semibold text-(--color-text-primary)">
+							Informações
+						</h2>
+						<ul className="mt-2 space-y-1 text-sm text-(--color-text-secondary)">
+							<li>• Produto genérico e adaptável</li>
+							<li>• Variações por variante (cor/tamanho/material)</li>
+							<li>• Backend Java será integrado depois</li>
+						</ul>
 
-						{produto.nomesOpcoes.length > 0 ? (
-							<div className="mt-4 flex flex-col gap-3">
-								<p className="text-sm font-medium text-(--color-text-primary)">
-									Opções disponíveis
-								</p>
-
-								<div className="flex flex-wrap gap-2">
-									{produto.variantes.slice(0, 8).map((v) => {
-										const texto = Object.entries(v.opcoes)
-											.map(([k, val]) => `${k}: ${val}`)
-											.join(" • ");
-
-										return <ChipOpcao key={v.id} texto={texto} />;
-									})}
-								</div>
-
-								<p className="text-xs text-(--color-text-secondary)">
-									Seleção de variante entra no próximo passo.
-								</p>
-							</div>
-						) : null}
-
-						<div className="mt-5 flex flex-col gap-2 sm:flex-row">
-							<button
-								type="button"
-								className="h-11 w-full rounded-xl bg-(--color-accent) px-4 text-sm font-medium text-white hover:opacity-95 sm:w-auto"
-							>
-								Adicionar ao carrinho
-							</button>
-
-							<Link
-								href="/produtos"
-								className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-(--color-border) bg-(--color-background) px-4 text-sm font-medium text-(--color-text-primary) hover:bg-(--color-surface) sm:w-auto"
-							>
-								Voltar
-							</Link>
-						</div>
+						<Link
+							href="/produtos"
+							className="mt-4 inline-flex rounded-xl border border-(--color-border) bg-(--color-background) px-4 py-2 text-sm font-medium text-(--color-text-primary) hover:bg-(--color-surface)"
+						>
+							Voltar para produtos
+						</Link>
 					</div>
 				</div>
 			</div>
